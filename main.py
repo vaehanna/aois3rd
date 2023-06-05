@@ -49,7 +49,7 @@ def calculation_method(function, key=None):
 
 def calculation_tabular_method(nf, SNF, key=None):
     """
-    This function is performs calculation-tabular method for KNF
+    This function performs calculation-tabular method for KNF
     """
     mnf, table, filled_columns, verifiable_implicants = [], [], [], []
     for i in nf:
@@ -68,6 +68,7 @@ def calculation_tabular_method(nf, SNF, key=None):
     verifiable_implicants = [i for i in nf if i not in mnf]
     if False in filled_columns:
         min_amount = 256
+        subset = []  # Declare subset variable here
         for amount in range(1, len(verifiable_implicants) + 1):
             for subset in combinations(verifiable_implicants, amount):
                 set_of_verifiable_implicants = [table[nf.index(i)] for i in subset]
@@ -188,10 +189,10 @@ def print_mknf(mknf):
 
 
 def main():
-    try:
-        SDNF = ("!a*b*c + a*!b*!c + a*!b*c + a*b*c")
+
+        SDNF = ("!a*b*c + a*!b*!c + a*!b*c + !a*!b*c")
         print(SDNF)
-        SKNF = ("(a+b+c) * (a+b+!c) * (a+!b+c) * (!a+!b+c)")
+        SKNF = ("(a+b+c) * (a+b+!c) * (!a+!b+c)")
         print(SKNF)
         if check(SDNF, "dnf") and check(SKNF, "knf"):
             SDNF = [i.split("*") for i in SDNF.split(" + ")]
@@ -222,8 +223,7 @@ def main():
             print_mknf(mknf)
         else:
             print("mistake(")
-    except Exception:
-        print("!!!something went wrong!!!")
+
 
 
 if __name__ == '__main__':
